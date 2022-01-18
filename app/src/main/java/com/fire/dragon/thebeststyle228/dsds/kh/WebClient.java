@@ -1,6 +1,7 @@
 package com.fire.dragon.thebeststyle228.dsds.kh;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -21,13 +22,14 @@ public class WebClient extends WebViewClient {
     }
 
     @Override
-    public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
-
-        if (errorResponse.getStatusCode() == 404){
+    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        super.onPageStarted(view, url, favicon);
+        if(url.contains("404")){
             fd.startActivity(new Intent(fd.getApplicationContext(), MainActivity.class));
             fd.finishAffinity();
         }
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
