@@ -43,7 +43,7 @@ public class FD extends Activity {
         wdsdsd = findViewById(R.id.wdsdsd);
         int hgf = Dddd.dddd(this);
 
-        if (hgf != 0){
+        if (hgf == 0){
 
             new Thread(new Runnable() {
                 @Override

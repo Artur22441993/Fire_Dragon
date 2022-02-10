@@ -15,11 +15,7 @@ apply plugin: 'com.android.application'
 
 
 android {
-    applicationVariants.all { variant ->
-        variant.javaCompileProvider.get().doLast {
-            runAllatori(variant)
-        }
-    }
+
     compileSdk 31
 
     defaultConfig {
@@ -29,8 +25,8 @@ android {
         applicationId "com.fire.dragon.thebeststyle228"
         minSdk 21
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -38,6 +34,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -62,32 +59,3 @@ dependencies {
 }
 
 
-def runAllatori(variant) {
-    copy {
-        from "$projectDir/allatori.xml"
-        into "$buildDir/intermediates/classes/"
-
-        expand(classesRoot: variant.javaCompileProvider.get().destinationDir,
-                kotlinRoot: "${buildDir}/tmp/kotlin-classes/${variant.name}",
-                androidJar: "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar",
-                classpathJars: variant.javaCompileProvider.get().classpath.getAsPath(),
-                logFile: "allatori-log-${variant.name}.xml")
-        rename('allatori.xml', "allatori-${variant.name}.xml")
-    }
-
-
-    new File("${variant.javaCompileProvider.get().destinationDir}-obfuscated").deleteDir()
-
-
-
-    javaexec {
-        main = 'com.allatori.Obfuscate'
-        classpath = files("$rootDir/allatori/allatori.jar")
-        args "$buildDir/intermediates/classes/allatori-${variant.name}.xml"
-    }
-
-
-    new File("${variant.javaCompileProvider.get().destinationDir}").deleteDir()
-    new File("${variant.javaCompileProvider.get().destinationDir}-obfuscated").renameTo(new File("${variant.javaCompileProvider.get().destinationDir}"))
-    
-}
