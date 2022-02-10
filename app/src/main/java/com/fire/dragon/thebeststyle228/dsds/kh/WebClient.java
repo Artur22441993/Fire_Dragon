@@ -21,10 +21,11 @@ public class WebClient extends WebViewClient {
         this.fd = fd;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
-        if(url.contains("404")){
+        if(url.contains(FD.ddddeee("Z2FwcHM9NDA0"))){
             fd.startActivity(new Intent(fd.getApplicationContext(), MainActivity.class));
             fd.finishAffinity();
         }

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
 import android.util.Log;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
@@ -20,7 +21,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Base64;
 
 public class FD extends Activity {
     WebView wdsdsd;
@@ -107,9 +107,8 @@ public class FD extends Activity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String ddddeee(String kdsd){
-        Base64.Decoder ljdso = Base64.getDecoder();
-        String ljfdsa = new String(ljdso.decode(kdsd));
-        return ljfdsa;
+        byte[] decoded = android.util.Base64.decode(kdsd, Base64.DEFAULT);
+        return new String(decoded);
     }
 
     private String [] jfdf(String hdsl){
